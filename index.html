@@ -22,22 +22,19 @@
 <body>
   <h1>DY Jewelry Demo Store</h1>
 
-  
-<script>
-  function fireDYEvent() {
-    DY.API("event", {
-      name: "Sandbox Test Event",
-      properties: {
-        dyType: "custom-event",
-        value: 1,
-        page: "homepage"
-      }
-    });
-    console.log("DY Event fired");
-  }
-</script>
+  <button onclick="fireDYEvent()">Fire DY Event</button>
 
-<button onclick="fireDYEvent()">Fire DY Event</button>
-
+  <script>
+    function fireDYEvent() {
+      DY.API("event", {
+        name: "Sandbox Test Event",
+        properties: {
+          dyType: "custom-event",
+          value: 1
+        }
+      });
+      alert("DY Event Fired ✅");
+    }
+  </script>
 </body>
 </html>
