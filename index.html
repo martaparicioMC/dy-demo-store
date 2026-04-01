@@ -317,9 +317,13 @@
         }
       }
     
-      document.addEventListener("DOMContentLoaded", function () {
-          loadDYRecommendations();
-        });
+      window.DY = window.DY || {};
+      DY.ready = DY.ready || [];
+      
+      DY.ready.push(function () {
+        console.log("DY is ready ✅");
+        loadDYRecommendations();
+      });
 
   </script>
 </body>
