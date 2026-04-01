@@ -234,6 +234,11 @@
       </div>
     </section>
 
+    <section class="card" style="margin-bottom:40px;">
+      <h2>Recommended for you</h2>
+        <div id="dy-recs" class="grid"></div>
+    </section>
+
     <footer>
       Sandbox only • Use DevTools → Network to confirm events are sent successfully.
     </footer>
@@ -270,6 +275,52 @@
         console.error(e);
       }
     }
+
+    //RECOMMENDATION 
+    function loadDYRecommendations() {
+        try {
+          DY.API("recommendation", {
+            id: 1454243, 
+            callback: function (response) {
+              console.log("DY recommendations response:", response);
+    
+              const container = document.getElementById("dy-recs");
+              container.innerHTML = "";
+    
+              if (!response || !response.slots || !response.slots[0]) {
+                container.innerHTML = "<p class='muted'>No recommendations returned.</p>";
+                return;
+              }
+    
+              const items = response.slots[0].items;
+    
+              items.forEach(item => {
+                const product = document.createElement("div");
+                product.className = "product";
+    
+                product.innerHTML = `
+                  <div class="muted">${item.categories?.[0] || "Product"}</div>
+                  <h3>${item.name}</h3>
+                  <div class="price">€${item.price || "-"}</div>
+                  <button class="btn"
+                    onclick="fireDYEvent('Recommendation Click', { sku: '${item.sku}' })">
+                    View product
+                  </button>
+                `;
+    
+                container.appendChild(product);
+              });
+            }
+          });
+        } catch (e) {
+          console.error("DY Recommendations failed", e);
+        }
+      }
+    
+      document.addEventListener("DOMContentLoaded", function () {
+          loadDYRecommendations();
+        });
+
   </script>
 </body>
 </html>
